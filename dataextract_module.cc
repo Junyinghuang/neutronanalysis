@@ -401,10 +401,10 @@ void test::dataextract::analyze(art::Event const& e)
                     getAncestorpdg.insert(std::pair<int,int>(i,pdg));
                     break;
                 }
-                pdgnum=getPDGnum[pdg];
-                std::cout<<"PDG: "<<pdg<<" PDGnum: "<<pdgnum<<std::endl;
-                HitAncestorPDGnum.push_back(pdgnum);
             }
+            pdgnum=getPDGnum[pdg];
+            std::cout<<"PDG: "<<pdg<<" PDGnum: "<<pdgnum<<std::endl;
+            HitAncestorPDGnum.push_back(pdgnum);
         }
     
     for (int i = 0; i < (int) pointsList.size(); i++){
