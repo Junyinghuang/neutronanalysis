@@ -398,11 +398,10 @@ void test::dataextract::analyze(art::Event const& e)
                     pdg=getpdg[mothertemp];
                     HitAncestor.push_back(mothertemp);
                     HitAncestorPDG.push_back(pdg);
-                    pdgnum=getPDGnum[pdg];
-                    HitAncestorPDGnum.push_back(pdgnum);
                     getAncestorpdg.insert(std::pair<int,int>(i,pdg));
                     break;
                 }
+                pdgnum=getPDGnum[pdg];
                 HitAncestorPDGnum.push_back(pdgnum);
             }
         }
