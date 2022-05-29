@@ -356,7 +356,7 @@ void test::dataextract::analyze(art::Event const& e)
             HitGOF.push_back(hitlist[i]->GoodnessOfFit());
             auto hitChannelNumber = hitlist[i]->Channel();
             auto hitpt = (int)hitlist[i]->PeakTime();
-            std::cout<<hitChannelNumber<<std::endl;
+            //std::cout<<hitChannelNumber<<std::endl;
             int hitid=-1;
             int mother=-1;
             int mothertemp=-1;
@@ -402,6 +402,7 @@ void test::dataextract::analyze(art::Event const& e)
                     break;
                 }
                 pdgnum=getPDGnum[pdg];
+                std::cout<<"PDG: "<<pdg<<" PDGnum: "<<pdgnum<<std::endl;
                 HitAncestorPDGnum.push_back(pdgnum);
             }
         }
