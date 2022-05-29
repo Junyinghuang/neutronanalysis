@@ -156,6 +156,13 @@ private:
     std::vector<int> HitTrackID;
     std::vector<float> HitInt;
     std::vector<float> HitADC;
+    std::vector<float> HitSigmaPT;
+    std::vector<float> HitRMS;
+    std::vector<float> HitPA;
+    std::vector<float> HitSigmaPA;
+    std::vector<float> HitSigmaInt;
+    std::vector<float> HitGOF;
+    std::vector<int> HitAncestorPDGnum;
     std::vector<int> HitAncestor;
     std::vector<int> HitAncestorPDG;
     std::vector<int> spx;
@@ -169,6 +176,7 @@ private:
     std::map<int,int> getAncestorpdg;
     std::map<int,float> getHitInt;
     std::map<int,float> getHitADC;
+    std::map<int,int>getPDGnum;
       
   // Truth variables
   float    fTrueEnergy;
@@ -206,16 +214,30 @@ void test::dataextract::beginJob() {
     fTree->Branch("HitTrackID", &HitTrackID);
     fTree->Branch("HitInt", &HitInt);
     fTree->Branch("HitADC", &HitADC);
+    fTree->Branch("HitSigmaPT", &HitSigmaPT);
+    fTree->Branch("HitRMS", &HitRMS);
+    fTree->Branch("HitPA", &HitPA);
+    fTree->Branch("HitSigmaPA", &HitSigmaPA);
+    fTree->Branch("HitSigmaInt", &HitSigmaInt);
+    fTree->Branch("HitGOF", &HitGOF);
     fTree->Branch("HitPeakTime", &HitPeakTime);
     fTree->Branch("HitAncestor", &HitAncestor);
     fTree->Branch("HitAncestorPDG", &HitAncestorPDG);
     //fTree->Branch("SCChannelID", &SCChannelID);
     fTree->Branch("spAncestorPDG", &spAncestorPDG);
+    fTree->Branch("HitAncestorPDGnum", &HitAncestorPDGnum);
     fTree->Branch("spInt", &spInt);
     fTree->Branch("spADC", &spADC);
     fTree->Branch("spx", &spx);
     fTree->Branch("spy", &spy);
     fTree->Branch("spz", &spz);
+    
+    getPDGnum.insert(std::pair<int,int>(-1,0));
+    getPDGnum.insert(std::pair<int,int>(2112,1));
+    getPDGnum.insert(std::pair<int,int>(13,2));
+    getPDGnum.insert(std::pair<int,int>(-13,2));
+    getPDGnum.insert(std::pair<int,int>(11,3));
+    getPDGnum.insert(std::pair<int,int>(-11,3));
 }
 
 void test::dataextract::endJob() {
@@ -266,6 +288,14 @@ void test::dataextract::analyze(art::Event const& e)
     getAncestorpdg.clear();
     getHitInt.clear();
     getHitADC.clear();
+    HitSigmaPT.clear();
+    HitRMS.clear();
+    HitPA.clear();
+    HitSigmaPA.clear();
+    HitSigmaInt.clear();
+    HitGOF.clear();
+    HitAncestorPDGnum.clear();
+    getPDGnum.clear();
     //SCChannelID.clear();
   // Access the MC truth information
   //fTrueEnergy = -999.;!
@@ -312,6 +342,12 @@ void test::dataextract::analyze(art::Event const& e)
             getHitInt.insert(std::pair<int,float>(i,hitlist[i]->Integral()));
             HitADC.push_back(hitlist[i]->SummedADC());
             getHitADC.insert(std::pair<int,float>(i,hitlist[i]->SummedADC()));
+            HitSigmaPT.push_back(hitlist[i]->SigmaPeakTime());
+            HitRMS.push_back(hitlist[i]->RMS());
+            HitPA.push_back(hitlist[i]->PeakAmplitude());
+            HitSigmaPA.push_back(hitlist[i]->SigmaPeakAmplitude());
+            HitSigmaInt.push_back(hitlist[i]->SigmaIntegral());
+            HitGOF.push_back(hitlist[i]->GoodnessOfFit());
             auto hitChannelNumber = hitlist[i]->Channel();
             auto hitpt = (int)hitlist[i]->PeakTime();
             std::cout<<hitChannelNumber<<std::endl;
@@ -320,6 +356,7 @@ void test::dataextract::analyze(art::Event const& e)
             int mothertemp=-1;
             //int ancestor=-1;
             int pdg=-1;
+            int pdgnum=-1;
             
             for(auto &sc : *scs) {
                 auto simChannelNumber = sc.Channel();
@@ -355,6 +392,8 @@ void test::dataextract::analyze(art::Event const& e)
                     pdg=getpdg[mothertemp];
                     HitAncestor.push_back(mothertemp);
                     HitAncestorPDG.push_back(pdg);
+                    pdgnum=getPDGnum[pdg];
+                    HitAncestorPDGnum.push_back(pdgnum);
                     getAncestorpdg.insert(std::pair<int,int>(i,pdg));
                     break;
                 }
