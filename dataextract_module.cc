@@ -232,12 +232,12 @@ void test::dataextract::beginJob() {
     fTree->Branch("spy", &spy);
     fTree->Branch("spz", &spz);
     
-    getPDGnum.insert(std::pair<int,int>(-1,0));
+    /*getPDGnum.insert(std::pair<int,int>(-1,0));
     getPDGnum.insert(std::pair<int,int>(2112,1));
     getPDGnum.insert(std::pair<int,int>(13,2));
     getPDGnum.insert(std::pair<int,int>(-13,2));
     getPDGnum.insert(std::pair<int,int>(11,3));
-    getPDGnum.insert(std::pair<int,int>(-11,3));
+    getPDGnum.insert(std::pair<int,int>(-11,3));*/
 }
 
 void test::dataextract::endJob() {
@@ -296,6 +296,12 @@ void test::dataextract::analyze(art::Event const& e)
     HitGOF.clear();
     HitAncestorPDGnum.clear();
     getPDGnum.clear();
+    getPDGnum.insert(std::pair<int,int>(-1,0));
+    getPDGnum.insert(std::pair<int,int>(2112,1));
+    getPDGnum.insert(std::pair<int,int>(13,2));
+    getPDGnum.insert(std::pair<int,int>(-13,2));
+    getPDGnum.insert(std::pair<int,int>(11,3));
+    getPDGnum.insert(std::pair<int,int>(-11,3));
     //SCChannelID.clear();
   // Access the MC truth information
   //fTrueEnergy = -999.;!
@@ -397,6 +403,7 @@ void test::dataextract::analyze(art::Event const& e)
                     getAncestorpdg.insert(std::pair<int,int>(i,pdg));
                     break;
                 }
+                HitAncestorPDGnum.push_back(pdgnum);
             }
         }
     
