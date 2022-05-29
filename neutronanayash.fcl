@@ -1,0 +1,74 @@
+#include "services_dune.fcl"
+#include "hitfindermodules_dune.fcl"
+#include "filters.fcl"
+#include "ProtoDUNEUnstableHVFilter.fcl"
+#include "signalservices_dune.fcl"
+#include "caldata_dune.fcl"
+#include "trackfindermodules_dune.fcl"
+#include "ecalibration.fcl"
+#include "triggeralgo_service.fcl"
+#include "photpropservices_dune.fcl"
+#include "ProtoDUNEDataUtils.fcl"
+#include "ProtoDUNEFembFilter.fcl"
+#include "calorimetry_dune10kt.fcl"
+
+process_name: neutronanayash
+
+services:
+{
+  #Load the service that manages root files for histograms.
+  TFileService: { fileName: "temp_tfs.root" }
+  RandomNumberGenerator: {}                     #ART native random number generator
+  @table::protodune_services
+  message:      @local::standard_info
+  LArG4Parameters:        @local::dunefd_largeantparameters
+  FileCatalogMetadata: @local::art_file_catalog_mc
+}
+
+#source is now a root file
+source:
+{
+  module_type: RootInput
+  maxEvents:  -1            # Number of events to create
+}
+physics:
+{
+          producers:{
+              
+          }
+          filters:	
+          {
+              f1: @local::HVfilter
+              #f2: @local::pdsp_fembfilter_all
+              
+          } 
+          fpath: [f1]
+          
+          analyzers:{
+            neutronana:
+              {
+                  module_type: "neutronanayash"
+                  SelectEvents: [fpath]
+              }
+          }
+ 
+          
+          ana:  [ neutronana ]
+          end_paths:     [  ana ] 
+}
+
+# define the list of LArSoft modules to run through the simulate path
+
+physics.analyzers.neutronana.CalorimetryAlg:  @local::dune10kt_calorimetryalgmc
+physics.analyzers.neutronana.TrackModuleLabel:        "pandoraTrack"
+physics.analyzers.neutronana.CalorimetryModuleLabel:  "pandoracalonosce"
+#physics.analyzers.neutronana.HitsModuleLabel:  "gaushit"
+physics.analyzers.neutronana.HitsModuleLabel:  "hitpdune"
+physics.analyzers.neutronana.SpacePointLabel: "reco3d"
+physics.analyzers.neutronana.ShowerLabel: "pandoraShower"
+physics.analyzers.neutronana.Cluster3dLabel: "dbcluster"
+physics.analyzers.neutronana.Cluster2dLabel: "trajcluster"
+physics.analyzers.neutronana.SaveTrackInfo: true
+physics.analyzers.velocity.SelectEvents: [fpath]
+
+services.Geometry:                     @local::protodunev7_ddg_geo
