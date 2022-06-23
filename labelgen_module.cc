@@ -11,8 +11,6 @@
 #include "lardataobj/RawData/raw.h"
 #include "lardataobj/RawData/RawDigit.h"
 
-
-
 // Framework includes
 #include "art/Framework/Core/EDAnalyzer.h"
 #include "art/Framework/Principal/Event.h"
@@ -98,12 +96,8 @@ namespace label_gen{
     std::vector<TH2S*> fTimeChanV;
     std::vector<TH2S*> fTimeChanZ;
 
-
-
-
     // define nADC counts for uncompressed vs compressed
     unsigned int nADC_uncompPed;
-
 
     geo::GeometryCore const * fGeom = &*(art::ServiceHandle<geo::Geometry>());
 
@@ -298,6 +292,7 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanU[apa]->Fill(chan,l, uncompPed.at(l));
+                    std::cout<<"U APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<std::endl;
 	  			}
 				}
       }// end of U View
@@ -307,6 +302,7 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanV[apa]->Fill(chan,l, uncompPed.at(l));
+                    std::cout<<"V APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<std::endl;
 	  			}
 				}
       }// end of V View
@@ -315,11 +311,10 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanZ[apa]->Fill(chan,l, uncompPed.at(l));
+                    std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<std::endl;
 	  			}
 				}	
       }
-
-            
     } // RawDigits   
       
     return;
