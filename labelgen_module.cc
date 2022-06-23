@@ -292,7 +292,7 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanU[apa]->Fill(chan,l, uncompPed.at(l));
-                    std::cout<<"U APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<std::endl;
+                    std::cout<<"U APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<std::endl;
 	  			}
 				}
       }// end of U View
@@ -302,7 +302,7 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanV[apa]->Fill(chan,l, uncompPed.at(l));
-                    std::cout<<"V APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<std::endl;
+                    std::cout<<"V APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<std::endl;
 	  			}
 				}
       }// end of V View
@@ -311,7 +311,7 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanZ[apa]->Fill(chan,l, uncompPed.at(l));
-                    std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<std::endl;
+                    std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<std::endl;
 	  			}
 				}	
       }
