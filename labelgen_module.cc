@@ -165,6 +165,9 @@ namespace label_gen{
     fNVCh=fVChanMax-fVChanMin+1;
     fNZCh=fZChanMax-fZChanMin+1;
 
+      std::cout<<"fNofAPA: "<<fNofAPA<<" fChansPerAPA: "<<fChansPerAPA<<std::endl;
+      std::cout<<"fUChanMin: "<<fUChanMin<<" fUChanMax: "<<fUChanMax<<" fVChanMin: "<<fVChanMin<<" fVChanMax: "<<fVChanMax<<" fZChanMin: "<<fZChanMin<<" fZChanMax: "<<fZChanMax<<std::endl;
+      std::cout<<"fNUCh: "<<fNUCh<<" fNVCh: "<<fNVCh<<" fNZCh: "<<fNZCh<<std::endl;
     
     unsigned int minT = 0;
     unsigned int maxT = 0;
