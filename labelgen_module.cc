@@ -31,6 +31,25 @@
 #include "TCanvas.h"
 #include "TPad.h"
 #include "TFile.h"
+#include "TDirectory.h"
+#include "TProfile.h"
+#include "TROOT.h"
+#include "TStyle.h"
+#include "TMath.h"
+#include "TF1.h"
+#include "TGeoMaterial.h"
+#include "TGeoElement.h"
+#include "TGraphErrors.h"
+#include "TMinuit.h"
+#include "TString.h"
+#include "TTimeStamp.h"
+#include "TVectorD.h"
+#include "TCanvas.h"
+#include "TFrame.h"
+#include "TLine.h"
+#include "TAxis.h"
+#include "TTimeStamp.h"
+#include "TLorentzVector.h"
 
 // C++ Includes
 #include <map>
@@ -67,6 +86,7 @@ namespace label_gen{
     std::string fTPCInstance;
 
     // Branch variables for tree
+    TTree *fTree;
     unsigned int fEvent;
     unsigned int fRun;
     unsigned int fSubRun;
@@ -95,6 +115,13 @@ namespace label_gen{
     std::vector<TH2S*> fTimeChanU;
     std::vector<TH2S*> fTimeChanV;
     std::vector<TH2S*> fTimeChanZ;
+    std::vector<std::vector<double>> Z0;
+    std::vector<std::vector<double>> Z1;
+    std::vector<std::vector<double>> Z2;
+    std::vector<std::vector<double>> Z3;
+    std::vector<std::vector<double>> Z4;
+    std::vector<std::vector<double>> Z5;
+    std::vector<double> v;
 
     // define nADC counts for uncompressed vs compressed
     unsigned int nADC_uncompPed;
@@ -122,7 +149,26 @@ namespace label_gen{
     // place to define the histograms
 
     art::ServiceHandle<art::TFileService> tfs;
-    //Histogram names and titles                                                                                                                                                         
+    //Histogram names and titles
+    
+      fTree = tfs->make<TTree>("mytree", "My Tree");
+      fTree->Branch("event", &fEvent, "event/I");
+      fTree->Branch("Z0", &Z0);
+      fTree->Branch("Z1", &Z1);
+      fTree->Branch("Z2", &Z2);
+      fTree->Branch("Z3", &Z3);
+      fTree->Branch("Z4", &Z5);
+      fTree->Branch("Z5", &Z5);
+      
+      for(i=0;i<960;i++){
+          Z0.push_back(v);
+          Z1.push_back(v);
+          Z2.push_back(v);
+          Z3.push_back(v);
+          Z4.push_back(v);
+          Z5.push_back(v);
+      }
+      
     std::stringstream  name, title;
 
     unsigned int UChMin;
@@ -252,6 +298,15 @@ namespace label_gen{
     fRun    = event.run();
     fSubRun = event.subRun();
     std::cout << "EventNumber = " << fEvent << std::endl;
+      
+      for(i=0;i<960;i++){
+          Z0.clear();
+          Z1.clear();
+          Z2.clear();
+          Z3.clear();
+          Z4.clear();
+          Z5.clear();
+      }
 
     // Get the objects holding raw information: RawDigit for TPC data
     art::Handle< std::vector<raw::RawDigit> > RawTPC;
@@ -292,7 +347,7 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanU[apa]->Fill(chan,l, uncompPed.at(l));
-                    std::cout<<"U APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA: "<<chan-apa*fChansPerAPA<<std::endl;
+                    //std::cout<<"U APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA: "<<chan-apa*fChansPerAPA<<std::endl;
 	  			}
 				}
       }// end of U View
@@ -302,7 +357,7 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanV[apa]->Fill(chan,l, uncompPed.at(l));
-                    std::cout<<"V APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh: "<<chan-apa*fChansPerAPA-fNUCh<<std::endl;
+                    //std::cout<<"V APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh: "<<chan-apa*fChansPerAPA-fNUCh<<std::endl;
 	  			}
 				}
       }// end of V View
@@ -311,12 +366,31 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanZ[apa]->Fill(chan,l, uncompPed.at(l));
-                    std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
+                    if(apa==0){
+                        Z0[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                    }
+                    else if(apa==1){
+                        Z1[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                    }
+                    else if(apa==2){
+                        Z2[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                    }
+                    else if(apa==3){
+                        Z3[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                    }
+                    else if(apa==4){
+                        Z4[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                    }
+                    else if(apa==5){
+                        Z5[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                    }
+
+                //std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
 	  			}
 				}	
       }
     } // RawDigits   
-      
+      fTree->Fill();
     return;
   }
   
