@@ -122,6 +122,7 @@ namespace label_gen{
     std::vector<std::vector<double>> Z4;
     std::vector<std::vector<double>> Z5;
     std::vector<double> v;
+      int cn;
 
     // define nADC counts for uncompressed vs compressed
     unsigned int nADC_uncompPed;
@@ -366,23 +367,24 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanZ[apa]->Fill(chan,l, uncompPed.at(l));
+                    cn=chan-apa*fChansPerAPA-fNUCh-fNVCh;
                     if(apa==0){
-                        Z0[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                        Z0[cn].push_back(uncompPed.at(l));
                     }
                     else if(apa==1){
-                        Z1[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                        Z1[cn].push_back(uncompPed.at(l));
                     }
                     else if(apa==2){
-                        Z2[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                        Z2[cn].push_back(uncompPed.at(l));
                     }
                     else if(apa==3){
-                        Z3[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                        Z3[cn].push_back(uncompPed.at(l));
                     }
                     else if(apa==4){
-                        Z4[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                        Z4[cn].push_back(uncompPed.at(l));
                     }
                     else if(apa==5){
-                        Z5[chan-apa*fChansPerAPA-fNUCh-fNVCh].push_back(uncompPed.at(l));
+                        Z5[0].push_back(uncompPed.at(l));
                     }
 
                 //std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
