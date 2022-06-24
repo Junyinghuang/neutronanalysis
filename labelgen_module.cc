@@ -160,7 +160,7 @@ namespace label_gen{
       fTree->Branch("Z4", &Z5);
       fTree->Branch("Z5", &Z5);
       
-      for(i=0;i<960;i++){
+      for(int i=0;i<960;i++){
           Z0.push_back(v);
           Z1.push_back(v);
           Z2.push_back(v);
@@ -299,7 +299,7 @@ namespace label_gen{
     fSubRun = event.subRun();
     std::cout << "EventNumber = " << fEvent << std::endl;
       
-      for(i=0;i<960;i++){
+      for(int i=0;i<960;i++){
           Z0.clear();
           Z1.clear();
           Z2.clear();
