@@ -375,7 +375,7 @@ namespace label_gen{
                         Z5.push_back(uncompPed.at(l));
                     }
 
-                //std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
+                std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
 	  			}
 				}	
       }
