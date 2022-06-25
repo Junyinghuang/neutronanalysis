@@ -115,14 +115,13 @@ namespace label_gen{
     std::vector<TH2S*> fTimeChanU;
     std::vector<TH2S*> fTimeChanV;
     std::vector<TH2S*> fTimeChanZ;
-    std::vector<std::vector<double>> Z0;
-    std::vector<std::vector<double>> Z1;
-    std::vector<std::vector<double>> Z2;
-    std::vector<std::vector<double>> Z3;
-    std::vector<std::vector<double>> Z4;
-    std::vector<std::vector<double>> Z5;
-    std::vector<double> v;
-      int cn;
+    std::vector<double> Z0;
+    std::vector<double> Z1;
+    std::vector<double> Z2;
+    std::vector<double> Z3;
+    std::vector<double> Z4;
+    std::vector<double> Z5;
+    //int cn;
 
     // define nADC counts for uncompressed vs compressed
     unsigned int nADC_uncompPed;
@@ -161,14 +160,14 @@ namespace label_gen{
       fTree->Branch("Z4", &Z5);
       fTree->Branch("Z5", &Z5);
       
-      for(int i=0;i<960;i++){
-          Z0.push_back(v);
-          Z1.push_back(v);
-          Z2.push_back(v);
-          Z3.push_back(v);
-          Z4.push_back(v);
-          Z5.push_back(v);
-      }
+      
+      Z0.push_back(v);
+      Z1.push_back(v);
+      Z2.push_back(v);
+      Z3.push_back(v);
+      Z4.push_back(v);
+      Z5.push_back(v);
+      
       
     std::stringstream  name, title;
 
@@ -300,14 +299,12 @@ namespace label_gen{
     fSubRun = event.subRun();
     std::cout << "EventNumber = " << fEvent << std::endl;
       
-      for(int i=0;i<960;i++){
-          Z0[i].clear();
-          Z1[i].clear();
-          Z2[i].clear();
-          Z3[i].clear();
-          Z4[i].clear();
-          Z5[i].clear();
-      }
+    Z0.clear();
+    Z1.clear();
+    Z2.clear();
+    Z3.clear();
+    Z4.clear();
+    Z5.clear();
 
     // Get the objects holding raw information: RawDigit for TPC data
     art::Handle< std::vector<raw::RawDigit> > RawTPC;
@@ -367,24 +364,24 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanZ[apa]->Fill(chan,l, uncompPed.at(l));
-                    cn=chan-apa*fChansPerAPA-fNUCh-fNVCh;
+                    //cn=chan-apa*fChansPerAPA-fNUCh-fNVCh;
                     if(apa==0){
-                        Z0[cn].push_back(uncompPed.at(l));
+                        Z0.push_back(uncompPed.at(l));
                     }
                     else if(apa==1){
-                        Z1[cn].push_back(uncompPed.at(l));
+                        Z1.push_back(uncompPed.at(l));
                     }
                     else if(apa==2){
-                        Z2[cn].push_back(uncompPed.at(l));
+                        Z2.push_back(uncompPed.at(l));
                     }
                     else if(apa==3){
-                        Z3[cn].push_back(uncompPed.at(l));
+                        Z3.push_back(uncompPed.at(l));
                     }
                     else if(apa==4){
-                        Z4[cn].push_back(uncompPed.at(l));
+                        Z4.push_back(uncompPed.at(l));
                     }
                     else if(apa==5){
-                        Z5[cn].push_back(uncompPed.at(l));
+                        Z5.push_back(uncompPed.at(l));
                     }
 
                 //std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
