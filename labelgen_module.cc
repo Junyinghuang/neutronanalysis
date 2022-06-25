@@ -160,15 +160,6 @@ namespace label_gen{
       fTree->Branch("Z4", &Z5);
       fTree->Branch("Z5", &Z5);
       
-      
-      Z0.push_back(v);
-      Z1.push_back(v);
-      Z2.push_back(v);
-      Z3.push_back(v);
-      Z4.push_back(v);
-      Z5.push_back(v);
-      
-      
     std::stringstream  name, title;
 
     unsigned int UChMin;
