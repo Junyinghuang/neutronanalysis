@@ -301,12 +301,12 @@ namespace label_gen{
     std::cout << "EventNumber = " << fEvent << std::endl;
       
       for(int i=0;i<960;i++){
-          Z0.clear();
-          Z1.clear();
-          Z2.clear();
-          Z3.clear();
-          Z4.clear();
-          Z5.clear();
+          Z0[i].clear();
+          Z1[i].clear();
+          Z2[i].clear();
+          Z3[i].clear();
+          Z4[i].clear();
+          Z5[i].clear();
       }
 
     // Get the objects holding raw information: RawDigit for TPC data
@@ -384,7 +384,7 @@ namespace label_gen{
                         Z4[cn].push_back(uncompPed.at(l));
                     }
                     else if(apa==5){
-                        Z5[0].push_back(uncompPed.at(l));
+                        Z5[cn].push_back(uncompPed.at(l));
                     }
 
                 //std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
