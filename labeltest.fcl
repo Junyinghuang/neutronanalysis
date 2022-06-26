@@ -1,0 +1,72 @@
+#include "services_dune.fcl"
+#include "simulationservices_dune.fcl"
+#include "geometry_dune.fcl"
+#include "singles_dune.fcl"
+#include "largeantmodules_dune.fcl"
+#include "detsimmodules_dune.fcl"
+#include "mccheatermodules.fcl"
+#include "photpropservices_dune.fcl"
+#include "opticaldetectormodules_dune.fcl"
+#include "opticaldetectorservices_dune.fcl"
+#include "hitfindermodules_dune.fcl"
+#include "filters.fcl"
+#include "ProtoDUNEUnstableHVFilter.fcl"
+#include "signalservices_dune.fcl"
+#include "caldata_dune.fcl"
+#include "trackfindermodules_dune.fcl"
+#include "ecalibration.fcl"
+#include "triggeralgo_service.fcl"
+#include "photpropservices_dune.fcl"
+#include "ProtoDUNEDataUtils.fcl"
+#include "ProtoDUNEFembFilter.fcl"
+#include "calorimetry_dune10kt.fcl"
+
+
+process_name : MyProtoDUNETestAnalyzer #The process name must NOT contain any underscores
+source : {
+ module_type : RootInput
+ maxEvents : -1
+}
+services :
+{
+@table::protodune_services
+ TFileService: { fileName: "scd.root" }
+ TimeTracker:           {}
+  MemoryTracker:         {}
+  RandomNumberGenerator: {} #ART native random number generator
+  FileCatalogMetadata:   @local::art_file_catalog_mc
+      Geometry:              @local::protodunev7_ddg_geo
+    #Geometry:              @local::dunefd_geo
+  #Geometry:              @local::dune10kt_1x2x6_geo
+        #Geometry:              @local::protodunev7_geo
+}
+
+outputs: {
+}
+
+physics: {
+ producers : {
+ }
+ analyzers: {
+   myana: {
+     module_type: labeltest
+     input_param: "optional"
+     TruthLabel: "largeant"
+     ParticleLabel: "pandora"
+     TrackLabel: "pandoraTrack"
+     SimChannelLabel:    "tpcrawdecoder"
+     SimChannelInstance:  "simpleSC"
+     #SimChannelLabel: ["tpcrawdecoder:simpleSC"]
+    #EDepModuleLabels: ["largeant:LArG4DetectorServicevolTPCActive"] }
+        EDepModuleLabels: ["IonAndScint:priorSCE"] }
+   }
+ filters : {
+ }
+ path0 : [ myana ]
+ 
+ #here, just a shorthand: could have done ana: [ myana ] then end_paths: [ ana ]
+ end_paths: [ path0 ]
+}
+
+#services.Geometry:              @local::protodunev7_ddg_geo
+
