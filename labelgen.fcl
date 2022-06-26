@@ -43,6 +43,9 @@ physics:
       module_type:     "labelgen"
       TPCInputModule:  "tpcrawdecoder"
       TPCInstanceName: "daq"
+      SimChannelLabel:    "tpcrawdecoder"
+      SimChannelInstance:  "simpleSC"
+      TruthLabel: "largeant"
     }
   }
   analysis: [ rawdraw ] //Directory for histograms

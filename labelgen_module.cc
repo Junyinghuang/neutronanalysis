@@ -123,6 +123,16 @@ namespace label_gen{
     std::vector<double> Z5;
     int cn;
       int vi;
+      
+      std::vector<double> Z0l;
+      std::vector<double> Z1l;
+      std::vector<double> Z2l;
+      std::vector<double> Z3l;
+      std::vector<double> Z4l;
+      std::vector<double> Z5l;
+      
+      std::map<int,int> getmother;
+      std::map<int,int> getpdg;
 
     // define nADC counts for uncompressed vs compressed
     unsigned int nADC_uncompPed;
@@ -160,6 +170,12 @@ namespace label_gen{
       fTree->Branch("Z3", &Z3);
       fTree->Branch("Z4", &Z5);
       fTree->Branch("Z5", &Z5);
+      fTree->Branch("Z0l", &Z0l);
+      fTree->Branch("Z1l", &Z1l);
+      fTree->Branch("Z2l", &Z2l);
+      fTree->Branch("Z3l", &Z3l);
+      fTree->Branch("Z4l", &Z5l);
+      fTree->Branch("Z5l", &Z5l);
       
     std::stringstream  name, title;
 
@@ -275,6 +291,9 @@ namespace label_gen{
     fTPCInstance    = p.get< std::string >("TPCInstanceName");
     auto const detProp = art::ServiceHandle<detinfo::DetectorPropertiesService const>()->DataForJob();
     fNticks         = detProp.NumberTimeSamples();
+    fHitLabel = p.get<std::string>("HitLabel");
+    fSimChannelProducerLabel=p.get<std::string>("SimChannelLabel");
+    fSimChannelProducerInstance=p.get<std::string>("SimChannelInstance");
     return;
   }
 
@@ -297,6 +316,15 @@ namespace label_gen{
     Z3.clear();
     Z4.clear();
     Z5.clear();
+      Z0l.clear();
+      Z1l.clear();
+      Z2l.clear();
+      Z3l.clear();
+      Z4l.clear();
+      Z5l.clear();
+      
+      getmother.clear();
+      getpdg.clear();
       
       for(int i=0;i<5760000;i++){
           Z0.push_back(0);
@@ -305,6 +333,12 @@ namespace label_gen{
           Z3.push_back(0);
           Z4.push_back(0);
           Z5.push_back(0);
+          Z0l.push_back(0);
+          Z1l.push_back(0);
+          Z2l.push_back(0);
+          Z3l.push_back(0);
+          Z4l.push_back(0);
+          Z5l.push_back(0);
       }
 
     // Get the objects holding raw information: RawDigit for TPC data
@@ -390,7 +424,30 @@ namespace label_gen{
 	  			}
 				}	
       }
-    } // RawDigits   
+    } // RawDigits
+      
+    fSimChannelProducerTag = art::InputTag(fSimChannelProducerLabel, fSimChannelProducerInstance);
+    auto scs = e.getValidHandle<std::vector<sim::SimChannel>>(fSimChannelProducerTag);
+    auto mcParticles = e.getValidHandle<std::vector<simb::MCParticle>>(fTruthLabel);
+    for(auto &trueParticle : *mcParticles) {
+        getmother.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.Mother()));
+        getpdg.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.PdgCode()));
+    }
+    for(auto &sc : *scs){
+        auto simChannelNumber = sc.Channel();
+        std::cout<<"simChannelNumber: "<<simChannelNumber<<std::endl;
+        for(int i=0;i<6000;i++){
+            auto const& trackInfo=sc.TrackIDEs(i, i);
+            int infosize=trackInfo.size();
+            std::cout<<"i: "<<i<<" infosize: "<<infosize<<std::endl;
+            for(int j=0;j<infosize;j++){
+                std::cout<<"track id: "<<trackInfo[i].trackID<<std::endl;
+            }
+        }
+    }
+      
+      
+      
       fTree->Fill();
     return;
   }
