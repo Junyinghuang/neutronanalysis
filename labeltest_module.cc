@@ -121,10 +121,10 @@ public:
   // classes without bare pointers or other resource use.
 
   // Plugins should not be copied or assigned.
-    labeltest(dataextract const&) = delete;
-    labeltest(dataextract&&) = delete;
-    labeltest& operator=(dataextract const&) = delete;
-    labeltest& operator=(dataextract&&) = delete;
+    labeltest(labeltest const&) = delete;
+    labeltest(labeltest&&) = delete;
+    labeltest& operator=(labeltest const&) = delete;
+    labeltest& operator=(labeltest&&) = delete;
 
   // Required functions.
   void analyze(art::Event const& e) override;
@@ -182,11 +182,11 @@ void test::labeltest::beginJob() {
   art::ServiceHandle<art::TFileService> tfs;
   fTree = tfs->make<TTree>("mytree", "My Tree");
     fTree->Branch("event", &fEvent, "event/I");
-    fTree->Branch("scChannelID", &scChannelID);
+    /*fTree->Branch("scChannelID", &scChannelID);
     fTree->Branch("scTrackID", &scTrackID);
     fTree->Branch("scPeakTime", &scPeakTime);
     fTree->Branch("scAncestor", &scAncestor);
-    fTree->Branch("scAncestorPDG", &scAncestorPDG);
+    fTree->Branch("scAncestorPDG", &scAncestorPDG);*/
     //fTree->Branch("SCChannelID", &SCChannelID);
 }
 
@@ -218,13 +218,13 @@ void test::labeltest::analyze(art::Event const& e)
     
   fEvent = e.id().event();
     
-    scChannelID.clear();
+    /*scChannelID.clear();
     scPeakTime.clear();
     scTrackID.clear();
     scAncestor.clear();
-    scAncestorPDG.clear();
-    getmother.clear();
-    getpdg.clear();
+    scAncestorPDG.clear();*/
+    //getmother.clear();
+    //getpdg.clear();
     //SCChannelID.clear();
   // Access the MC truth information
   //fTrueEnergy = -999.;!
@@ -240,10 +240,10 @@ void test::labeltest::analyze(art::Event const& e)
     //auto hits = e.getValidHandle<std::vector<recob::Hit>>(fHitLabel);
     std::cout<<"event: "<<fEvent<<std::endl;
     auto mcParticles = e.getValidHandle<std::vector<simb::MCParticle>>(fTruthLabel);
-    for(auto &trueParticle : *mcParticles) {
+    /*for(auto &trueParticle : *mcParticles) {
         getmother.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.Mother()));
         getpdg.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.PdgCode()));
-    }
+    }*/
     for(auto &trueParticle : *mcParticles) {
         fEkGen = (std::sqrt(trueParticle.P()*trueParticle.P() + trueParticle.Mass()*trueParticle.Mass()) - trueParticle.Mass()) * 1000; // MeVs
         std::cout<<"PdgCode, Process, Total E(GeV), KineticE(MeV) = "<<trueParticle.PdgCode()<<", "<<trueParticle.Process()<<", "<<trueParticle.E()<<", "<<fEkGen<<std::endl;
