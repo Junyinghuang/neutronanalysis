@@ -10,6 +10,13 @@
 // Data type includes
 #include "lardataobj/RawData/raw.h"
 #include "lardataobj/RawData/RawDigit.h"
+#include "lardataobj/RawData/BeamInfo.h"
+#include "lardataobj/RecoBase/Wire.h"
+#include "lardataobj/Simulation/SimChannel.h"
+#include "lardataobj/Simulation/AuxDetSimChannel.h"
+#include "lardataobj/AnalysisBase/Calorimetry.h"
+#include "lardataobj/Simulation/SimEnergyDeposit.h"
+#include "lardataobj/RecoBase/PFParticle.h"
 
 // Framework includes
 #include "art/Framework/Core/EDAnalyzer.h"
@@ -21,6 +28,19 @@
 #include "canvas/Persistency/Common/FindManyP.h"
 #include "messagefacility/MessageLogger/MessageLogger.h"
 #include "fhiclcpp/ParameterSet.h"
+#include "canvas/Utilities/InputTag.h"
+#include "canvas/Utilities/Exception.h"
+#include "canvas/Persistency/Common/FindManyP.h"
+#include "canvas/Persistency/Common/PtrVector.h"
+#include "canvas/Persistency/Common/Ptr.h"
+#include "larsim/IonizationScintillation/ISCalcSeparate.h"
+#include "larsim/PhotonPropagation/PhotonVisibilityService.h"
+#include "larsim/Simulation/LArG4Parameters.h"
+#include "larsim/MCCheater/BackTrackerService.h"
+#include "larsim/MCCheater/ParticleInventoryService.h"
+#include "nusimdata/SimulationBase/MCParticle.h"
+#include "nusimdata/SimulationBase/MCTruth.h"
+#include "nusimdata/SimulationBase/MCFlux.h"
 
 // ROOT includes.
 #include "TH1.h"
@@ -431,8 +451,8 @@ namespace label_gen{
     } // RawDigits
       
     fSimChannelProducerTag = art::InputTag(fSimChannelProducerLabel, fSimChannelProducerInstance);
-    auto scs = e.getValidHandle<std::vector<sim::SimChannel>>(fSimChannelProducerTag);
-    auto mcParticles = e.getValidHandle<std::vector<simb::MCParticle>>(fTruthLabel);
+    auto scs = event.getValidHandle<std::vector<sim::SimChannel>>(fSimChannelProducerTag);
+    auto mcParticles = event.getValidHandle<std::vector<simb::MCParticle>>(fTruthLabel);
     for(auto &trueParticle : *mcParticles) {
         getmother.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.Mother()));
         getpdg.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.PdgCode()));
