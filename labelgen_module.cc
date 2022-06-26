@@ -306,8 +306,6 @@ namespace label_gen{
           Z4.push_back(0);
           Z5.push_back(0);
       }
-      
-      l_temp=0;
 
     // Get the objects holding raw information: RawDigit for TPC data
     art::Handle< std::vector<raw::RawDigit> > RawTPC;
