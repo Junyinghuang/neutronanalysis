@@ -167,8 +167,8 @@ private:
 
 
 test::labeltest::labeltest(fhicl::ParameterSet const& p)
-  : EDAnalyzer(p),
-    fNPrimaries(0)
+  : EDAnalyzer(p)
+    //fNPrimaries(0)
   // More initializers here.
 {
     this->reconfigure(p);
