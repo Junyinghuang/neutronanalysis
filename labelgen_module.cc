@@ -84,6 +84,10 @@ namespace label_gen{
     std::string fRawDigitLabel;
     std::string fTPCInput;
     std::string fTPCInstance;
+    std::string fTruthLabel;
+    std::string fSimChannelProducerLabel;
+    std::string fSimChannelProducerInstance;
+    art::InputTag fSimChannelProducerTag;
 
     // Branch variables for tree
     TTree *fTree;
@@ -291,7 +295,7 @@ namespace label_gen{
     fTPCInstance    = p.get< std::string >("TPCInstanceName");
     auto const detProp = art::ServiceHandle<detinfo::DetectorPropertiesService const>()->DataForJob();
     fNticks         = detProp.NumberTimeSamples();
-    fHitLabel = p.get<std::string>("HitLabel");
+    fTruthLabel = p.get<std::string>("TruthLabel");
     fSimChannelProducerLabel=p.get<std::string>("SimChannelLabel");
     fSimChannelProducerInstance=p.get<std::string>("SimChannelInstance");
     return;
