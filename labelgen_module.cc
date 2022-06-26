@@ -298,7 +298,7 @@ namespace label_gen{
     Z4.clear();
     Z5.clear();
       
-      for(inti=0;i<5760000;i++){
+      for(int i=0;i<5760000;i++){
           Z0.push_back(0);
           Z1.push_back(0);
           Z2.push_back(0);
