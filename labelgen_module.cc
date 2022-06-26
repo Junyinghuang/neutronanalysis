@@ -121,7 +121,8 @@ namespace label_gen{
     std::vector<double> Z3;
     std::vector<double> Z4;
     std::vector<double> Z5;
-    //int cn;
+    int cn;
+      int vi;
 
     // define nADC counts for uncompressed vs compressed
     unsigned int nADC_uncompPed;
@@ -296,6 +297,17 @@ namespace label_gen{
     Z3.clear();
     Z4.clear();
     Z5.clear();
+      
+      for(inti=0;i<5760000;i++){
+          Z0.push_back(0);
+          Z1.push_back(0);
+          Z2.push_back(0);
+          Z3.push_back(0);
+          Z4.push_back(0);
+          Z5.push_back(0);
+      }
+      
+      l_temp=0;
 
     // Get the objects holding raw information: RawDigit for TPC data
     art::Handle< std::vector<raw::RawDigit> > RawTPC;
@@ -355,27 +367,28 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanZ[apa]->Fill(chan,l, uncompPed.at(l));
-                    //cn=chan-apa*fChansPerAPA-fNUCh-fNVCh;
+                    cn=chan-apa*fChansPerAPA-fNUCh-fNVCh;
+                    vi=6000*cn+l;
                     if(apa==0){
-                        Z0.push_back(uncompPed.at(l));
+                        Z0[vi]=uncompPed.at(l);
                     }
                     else if(apa==1){
-                        Z1.push_back(uncompPed.at(l));
+                        Z1[vi]=uncompPed.at(l);
                     }
                     else if(apa==2){
-                        Z2.push_back(uncompPed.at(l));
+                        Z2[vi]=uncompPed.at(l);
                     }
                     else if(apa==3){
-                        Z3.push_back(uncompPed.at(l));
+                        Z3[vi]=uncompPed.at(l);
                     }
                     else if(apa==4){
-                        Z4.push_back(uncompPed.at(l));
+                        Z4[vi]=uncompPed.at(l);
                     }
                     else if(apa==5){
-                        Z5.push_back(uncompPed.at(l));
+                        Z5[vi]=uncompPed.at(l);
                     }
 
-                std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
+                //std::cout<<"Z APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh-fNVCh: "<<chan-apa*fChansPerAPA-fNUCh-fNVCh<<std::endl;
 	  			}
 				}	
       }
