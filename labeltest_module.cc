@@ -144,24 +144,24 @@ private:
   art::InputTag fSimEdepTag;     */
     std::string fTruthLabel;
     //std::string fSCLabel;
-    std::string fSimChannelProducerLabel;
-    std::string fSimChannelProducerInstance;
-    art::InputTag fSimChannelProducerTag;
+    //std::string fSimChannelProducerLabel;
+    //std::string fSimChannelProducerInstance;
+    //art::InputTag fSimChannelProducerTag;
 
   // Truth variables
-  float    fTrueEnergy;
+  //float    fTrueEnergy;
   // Reco variables
-  int fNPrimaries;
+  //int fNPrimaries;
     //geo::Geometry* geo_serv;
-    const TGeoMaterial * test_material;
+    //const TGeoMaterial * test_material;
     //TGeoElement* elem;
-    geo::Point_t test_point;
+    //geo::Point_t test_point;
   double fEkGen;
     //std::vector<double> vcode;
     int numD;
 
-    art::ServiceHandle<geo::Geometry> geo_serv;
-    geo::GeometryCore const * fGeom = &*(art::ServiceHandle<geo::Geometry>());
+    //art::ServiceHandle<geo::Geometry> geo_serv;
+    //geo::GeometryCore const * fGeom = &*(art::ServiceHandle<geo::Geometry>());
     
 };
 
@@ -204,8 +204,8 @@ void test::labeltest::reconfigure(fhicl::ParameterSet const & p)
     //fSimEdepTag = (art::InputTag(fTruthLabel, p.get<std::string>("EDepModuleLabels")));
     //fEDepTags = p.get<std::vector<art::InputTag>>("EDepModuleLabels");
     //fSCLabel =p.get<std::string>("SimChannelLabel");
-    fSimChannelProducerLabel=p.get<std::string>("SimChannelLabel");
-    fSimChannelProducerInstance=p.get<std::string>("SimChannelInstance");
+    //fSimChannelProducerLabel=p.get<std::string>("SimChannelLabel");
+    //fSimChannelProducerInstance=p.get<std::string>("SimChannelInstance");
 }
 
 
@@ -228,8 +228,8 @@ void test::labeltest::analyze(art::Event const& e)
     //SCChannelID.clear();
   // Access the MC truth information
   //fTrueEnergy = -999.;!
-    fSimChannelProducerTag = art::InputTag(fSimChannelProducerLabel, fSimChannelProducerInstance);
-    auto scs = e.getValidHandle<std::vector<sim::SimChannel>>(fSimChannelProducerTag);
+    //fSimChannelProducerTag = art::InputTag(fSimChannelProducerLabel, fSimChannelProducerInstance);
+    //auto scs = e.getValidHandle<std::vector<sim::SimChannel>>(fSimChannelProducerTag);
     //std::cout<<scs->size()<<std::endl;
     /*if(scs.isValid()) {
         for(auto &sc : *scs) {
@@ -247,7 +247,7 @@ void test::labeltest::analyze(art::Event const& e)
     for(auto &trueParticle : *mcParticles) {
         fEkGen = (std::sqrt(trueParticle.P()*trueParticle.P() + trueParticle.Mass()*trueParticle.Mass()) - trueParticle.Mass()) * 1000; // MeVs
         std::cout<<"PdgCode, Process, Total E(GeV), KineticE(MeV) = "<<trueParticle.PdgCode()<<", "<<trueParticle.Process()<<", "<<trueParticle.E()<<", "<<fEkGen<<std::endl;
-        std::cout<<"Trackid, "<<trueParticle.TrackId()<<" Mother: "<<trueParticle.Mother()<<" EndProcess: "<<trueParticle.EndProcess()<<" NumberDaughters: "<<trueParticle.NumberDaughters()<<"First and last daugher"<<trueParticle.FirstDaughter()<<" "<<trueParticle.LastDaughter()<<std::endl;
+        std::cout<<"Trackid, "<<trueParticle.TrackId()<<" Mother: "<<trueParticle.Mother()<<" EndProcess: "<<trueParticle.EndProcess()<<" NumberDaughters: "<<trueParticle.NumberDaughters()<<" First and last daugher"<<trueParticle.FirstDaughter()<<" "<<trueParticle.LastDaughter()<<std::endl;
         numD=trueParticle.NumberDaughters();
         for(int i=0;i<numD;i++){
             std::cout<<i<<"th daughter: "<<trueParticle.Daughter(i)<<std::endl;
