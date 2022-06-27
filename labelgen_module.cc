@@ -458,7 +458,7 @@ namespace label_gen{
             auto const& trackInfo=sc.TrackIDsAndEnergies(i, i);
             int infosize=trackInfo.size();
             if(infosize!=0){std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<infosize<<std::endl;}
-            for(int j=0;j<infosize;j++){
+            if(infosize!=2){for(int j=0;j<infosize;j++){
                 std::cout<<"j: "<<j<<std::endl;
                 std::cout<<"numElectrons: "<<trackInfo[i].numElectrons<<std::endl;
                 std::cout<<"energy: "<<trackInfo[i].energy<<std::endl;
@@ -467,7 +467,7 @@ namespace label_gen{
                 std::cout<<"z: "<<trackInfo[i].z<<std::endl;
                 sid=trackInfo[i].trackID;;
                 std::cout<<"track id: "<<sid<<std::endl;
-            }
+            }}
         }
     }
       
