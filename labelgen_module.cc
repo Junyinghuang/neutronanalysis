@@ -459,6 +459,7 @@ namespace label_gen{
     }
     for(auto &sc : *scs){
         auto simChannelNumber = sc.Channel();
+        if ( fGeom->View(simChannelNumber) != geo::kZ) continue;
         std::cout<<"simChannelNumber: "<<simChannelNumber<<std::endl;
         for(int i=0;i<6000;i++){
             auto const& trackInfo=sc.TrackIDEs(i, i);
