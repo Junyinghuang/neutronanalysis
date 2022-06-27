@@ -466,7 +466,7 @@ namespace label_gen{
             int infosize=trackInfo.size();
             if(infosize!=0){std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<infosize<<std::endl;}
             for(int j=0;j<infosize;j++){
-                std::cout<<"j: "<<j<<endl;
+                std::cout<<"j: "<<j<<std::endl;
                 std::cout<<"track id: "<<trackInfo[i].trackID<<std::endl;
             }
         }
