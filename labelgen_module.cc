@@ -1,6 +1,3 @@
-#ifndef labelgen_module
-#define labelgen_module
-
 // LArSoft includes
 #include "lardata/DetectorInfoServices/DetectorPropertiesService.h"
 #include "larcore/Geometry/Geometry.h"
@@ -79,10 +76,6 @@
 #include <string>
 #include <sstream>
 #include <cmath>
-
-#ifdef __MAKECINT__
-#pragma link C++ class vector<vector<int> >+;
-#endif
 
 namespace label_gen{
 
@@ -481,7 +474,3 @@ namespace label_gen{
   
 }
 DEFINE_ART_MODULE(label_gen::labelgen)
-  
-
-
-#endif
