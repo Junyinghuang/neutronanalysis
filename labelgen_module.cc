@@ -463,7 +463,7 @@ namespace label_gen{
         for(int i=0;i<6000;i++){
             auto const& trackInfo=sc.TrackIDEs(i, i);
             int infosize=trackInfo.size();
-            std::cout<<"i: "<<i<<" infosize: "<<infosize<<std::endl;
+            if(infosize!=0){std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<infosize<<std::endl;}
             for(int j=0;j<infosize;j++){
                 std::cout<<"track id: "<<trackInfo[i].trackID<<std::endl;
             }
