@@ -1,5 +1,4 @@
-
-#ifndef labelgen_module
+#ifndef labelgen_module
 #define labelgen_module
 
 // LArSoft includes
