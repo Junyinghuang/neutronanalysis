@@ -246,7 +246,7 @@ void test::labeltest::analyze(art::Event const& e)
     }*/
     std::cout<<"mcParticles is valid: "<<mcParticles.isValid()<<std::endl;
     for(auto &trueParticle : *mcParticles) {
-        std::cout<<"mcParticles is valid: "<<trueParticle.isValid()<<std::endl;
+        //std::cout<<"mcParticles is valid: "<<trueParticle.isValid()<<std::endl;
         fEkGen = (std::sqrt(trueParticle.P()*trueParticle.P() + trueParticle.Mass()*trueParticle.Mass()) - trueParticle.Mass()) * 1000; // MeVs
         std::cout<<"PdgCode, Process, Total E(GeV), KineticE(MeV) = "<<trueParticle.PdgCode()<<", "<<trueParticle.Process()<<", "<<trueParticle.E()<<", "<<fEkGen<<std::endl;
         std::cout<<"Trackid, "<<trueParticle.TrackId()<<" Mother: "<<trueParticle.Mother()<<" EndProcess: "<<trueParticle.EndProcess()<<" NumberDaughters: "<<trueParticle.NumberDaughters()<<std::endl;
