@@ -1,4 +1,4 @@
-
+
 #ifndef labelgen_module
 #define labelgen_module
 
@@ -154,6 +154,7 @@ namespace label_gen{
       std::vector<double> Z3l;
       std::vector<double> Z4l;
       std::vector<double> Z5l;
+      int sid;
       
       std::map<int,int> getmother;
       std::map<int,int> getpdg;
@@ -460,14 +461,15 @@ namespace label_gen{
     for(auto &sc : *scs){
         auto simChannelNumber = sc.Channel();
         if ( fGeom->View(simChannelNumber) != geo::kZ) continue;
-        std::cout<<"simChannelNumber: "<<simChannelNumber<<std::endl;
+        //std::cout<<"simChannelNumber: "<<simChannelNumber<<std::endl;
         for(int i=0;i<6000;i++){
-            auto const& trackInfo=sc.TrackIDEs(i, i);
+            auto const& trackInfo=sc.TrackIDsAndEnergies(i, i);
             int infosize=trackInfo.size();
             if(infosize!=0){std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<infosize<<std::endl;}
             for(int j=0;j<infosize;j++){
                 std::cout<<"j: "<<j<<std::endl;
-                std::cout<<"track id: "<<trackInfo[i].trackID<<std::endl;
+                sid=trackInfo[i].trackID;
+                std::cout<<"track id: "<<sid<<std::endl;
             }
         }
     }
