@@ -371,8 +371,9 @@ void test::dataextract::analyze(art::Event const& e)
                 if(trackInfo.size()!=0){
                     HitTrackID.push_back(trackInfo[0].trackID);
                     hitid=trackInfo[0].trackID;
+                    int infosize=trackInfo.size();
                     std::cout<<"chan: "<<simChannelNumber<<" i: "<<hitpt<<" infosize: "<<trackInfo.size()<<std::endl;
-                    for(int j=0;j<(int)trackInfo.size();j++){
+                    for(int j=0;j<infosize;j++){
                         std::cout<<"j: "<<j<<std::endl;
                         //std::cout<<"numElectrons: "<<trackInfo[i].numElectrons<<std::endl;
                         //std::cout<<"energy: "<<trackInfo[i].energy<<std::endl;
