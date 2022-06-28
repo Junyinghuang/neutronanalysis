@@ -377,7 +377,7 @@ void test::dataextract::analyze(art::Event const& e)
                         std::cout<<"j: "<<j<<std::endl;
                         //std::cout<<"numElectrons: "<<trackInfo[i].numElectrons<<std::endl;
                         //std::cout<<"energy: "<<trackInfo[i].energy<<std::endl;
-                        //int sid=trackInfo[i].trackID;
+                        int sid=trackInfo[i].trackID;
                         std::cout<<"track id: "<<hitid<<std::endl;
                 }
                 }
