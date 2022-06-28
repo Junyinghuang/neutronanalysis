@@ -455,19 +455,16 @@ namespace label_gen{
         if ( fGeom->View(simChannelNumber) != geo::kZ) continue;
         //std::cout<<"simChannelNumber: "<<simChannelNumber<<std::endl;
         for(int i=0;i<6000;i++){
-            auto const& trackInfo=sc.TrackIDsAndEnergies(i, i);
-            int infosize=trackInfo.size();
-            if(infosize!=0){std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<infosize<<std::endl;}
-            if(infosize!=2){for(int j=0;j<infosize;j++){
+            auto const& trackInfo=sc.TrackIDEs(i, i);
+            //int infosize=trackInfo.size();
+            if((int)trackInfo.size()!=0){std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<(int)trackInfo.size()<<std::endl;}
+            for(int j=0;j<(int)trackInfo.size();j++){
                 std::cout<<"j: "<<j<<std::endl;
                 std::cout<<"numElectrons: "<<trackInfo[i].numElectrons<<std::endl;
                 std::cout<<"energy: "<<trackInfo[i].energy<<std::endl;
-                std::cout<<"x: "<<trackInfo[i].x<<std::endl;
-                std::cout<<"y: "<<trackInfo[i].y<<std::endl;
-                std::cout<<"z: "<<trackInfo[i].z<<std::endl;
-                sid=trackInfo[i].trackID;
-                std::cout<<"track id: "<<sid<<std::endl;
-            }}
+                //sid=trackInfo[i].trackID;
+                std::cout<<"track id: "<<trackInfo[i].trackID<<std::endl;
+            }
         }
     }
       
