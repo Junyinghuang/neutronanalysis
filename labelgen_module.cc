@@ -468,7 +468,7 @@ namespace label_gen{
         fEkGen = (std::sqrt(trueParticle.P()*trueParticle.P() + trueParticle.Mass()*trueParticle.Mass()) - trueParticle.Mass()) * 1000; // MeVs
         getmother.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.Mother()));
         getpdg.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.PdgCode()));
-        getE.insert(std::pair<int,double>(trueParticle.TrackId(),fEkGen);
+        getE.insert(std::pair<int,double>(trueParticle.TrackId(),fEkGen));
     }
     for(auto &sc : *scs){
         auto simChannelNumber = sc.Channel();
