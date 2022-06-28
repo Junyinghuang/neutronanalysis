@@ -203,7 +203,7 @@ namespace label_gen{
       fTree->Branch("Z4l", &Z5l);
       fTree->Branch("Z5l", &Z5l);
       
-      getPDGnum.insert(std::pair<int,int>(2112,1));
+      //getPDGnum.insert(std::pair<int,int>(2112,1));
       getPDGnum.insert(std::pair<int,int>(11,4));
       getPDGnum.insert(std::pair<int,int>(-11,4));
       getPDGnum.insert(std::pair<int,int>(13,5));
@@ -492,10 +492,10 @@ namespace label_gen{
                         mother=getmother[mother];
                     }
                     if(mothertemp==2112){
-                        for(auto &trueParticle : *mcParticles) {
-                            auto mcid2=trueParticle.TrackId();
+                        for(auto &trueParticle2 : *mcParticles) {
+                            auto mcid2=trueParticle2.TrackId();
                             if (mcid2 != mothertemp2) continue;
-                            fEkGen = (std::sqrt(trueParticle.P()*trueParticle.P() + trueParticle.Mass()*trueParticle.Mass()) - trueParticle.Mass()) * 1000; // MeVs
+                            fEkGen = (std::sqrt(trueParticle2.P()*trueParticle2.P() + trueParticle2.Mass()*trueParticle2.Mass()) - trueParticle2.Mass()) * 1000; // MeVs
                             if(fEkGen<4){
                                 pdgnum=1;
                             }
