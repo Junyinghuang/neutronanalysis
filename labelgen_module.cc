@@ -146,10 +146,19 @@ namespace label_gen{
       std::vector<double> Z3l;
       std::vector<double> Z4l;
       std::vector<double> Z5l;
-      int sid;
+      int scid;
+      int cnl;
+      int vil;
+      int mother;
+      int mothertemp;
+      int mothertemp2;
+      int pdg;
+      double fEkGen;
+      int pdgnum;
       
       std::map<int,int> getmother;
       std::map<int,int> getpdg;
+      std::map<int,int> getPDGnum;
 
     // define nADC counts for uncompressed vs compressed
     unsigned int nADC_uncompPed;
@@ -193,6 +202,12 @@ namespace label_gen{
       fTree->Branch("Z3l", &Z3l);
       fTree->Branch("Z4l", &Z5l);
       fTree->Branch("Z5l", &Z5l);
+      
+      getPDGnum.insert(std::pair<int,int>(2112,1));
+      getPDGnum.insert(std::pair<int,int>(11,4));
+      getPDGnum.insert(std::pair<int,int>(-11,4));
+      getPDGnum.insert(std::pair<int,int>(13,5));
+      getPDGnum.insert(std::pair<int,int>(-13,5));
       
     std::stringstream  name, title;
 
@@ -453,19 +468,72 @@ namespace label_gen{
     for(auto &sc : *scs){
         auto simChannelNumber = sc.Channel();
         if ( fGeom->View(simChannelNumber) != geo::kZ) continue;
+        unsigned int apal = std::floor( simChannelNumber/fChansPerAPA );
+        std::cout<<"apal: "<<apal<<std::endl;
         //std::cout<<"simChannelNumber: "<<simChannelNumber<<std::endl;
         for(int i=0;i<6000;i++){
             auto const& trackInfo=sc.TrackIDEs(i, i);
             //int infosize=trackInfo.size();
-            if((int)trackInfo.size()!=0){std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<(int)trackInfo.size()<<std::endl;
-                sid=trackInfo[0].trackID;
-                for(int j=0;j<(int)trackInfo.size();j++){
-                    std::cout<<"j: "<<j<<std::endl;
-                    //std::cout<<"numElectrons: "<<trackInfo[i].numElectrons<<std::endl;
-                    //std::cout<<"energy: "<<trackInfo[i].energy<<std::endl;
-                    //sid=trackInfo[i].trackID;
-                    std::cout<<"track id: "<<sid<<std::endl;
+            if((int)trackInfo.size()!=0){
+                //std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<(int)trackInfo.size()<<std::endl;
+                scid=trackInfo[0].trackID;
+                cnl=simChannelNumber-apal*fChansPerAPA-fNUCh-fNVCh;
+                vil=6000*cnl+i;
+                for(auto &trueParticle : *mcParticles) {
+                    auto mcid=trueParticle.TrackId();
+                    if (mcid != scid) continue;
+                    //fEkGen = (std::sqrt(trueParticle.P()*trueParticle.P() + trueParticle.Mass()*trueParticle.Mass()) - trueParticle.Mass()) * 1000; // MeVs
+                    mother=trueParticle.Mother();
+                    mothertemp=mcid;
+                    while (mother != 0)
+                    {
+                        mothertemp2=mothertemp;
+                        mothertemp=mother;
+                        mother=getmother[mother];
+                    }
+                    if(mothertemp==2112){
+                        for(auto &trueParticle : *mcParticles) {
+                            auto mcid2=trueParticle.TrackId();
+                            if (mcid2 != mothertemp2) continue;
+                            fEkGen = (std::sqrt(trueParticle.P()*trueParticle.P() + trueParticle.Mass()*trueParticle.Mass()) - trueParticle.Mass()) * 1000; // MeVs
+                            if(fEkGen<4){
+                                pdgnum=1;
+                            }
+                            else if(fEkGen>=4 && fEkGen<5){
+                                pdgnum=2
+                            }
+                            else if(fEkGen>=5){
+                                pdgnum=3
+                            }
+                            break;
+                        }
+                    }
+                    else{
+                        pdg=getpdg[mothertemp];
+                        pdgnum=getPDGnum[pdg];
+                    }
+                    if(apal==0){
+                        Z0l[vil]=pdgnum;
+                    }
+                    else if(apal==1){
+                        Z1l[vil]=pdgnum;
+                    }
+                    else if(apal==2){
+                        Z2l[vil]=pdgnum;
+                    }
+                    else if(apal==3){
+                        Z3l[vil]=pdgnum;
+                    }
+                    else if(apal==4){
+                        Z4l[vil]=pdgnum;
+                    }
+                    else if(apal==5){
+                        Z5l[vil]=pdgnum;
+                    }
+                    
+                    break;
                 }
+                
             }
         }
     }
