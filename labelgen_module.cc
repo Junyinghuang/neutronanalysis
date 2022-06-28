@@ -155,10 +155,12 @@ namespace label_gen{
       int pdg;
       double fEkGen;
       int pdgnum;
+      int Ek;
       
       std::map<int,int> getmother;
       std::map<int,int> getpdg;
       std::map<int,int> getPDGnum;
+      std::map<int,double> getE;
 
     // define nADC counts for uncompressed vs compressed
     unsigned int nADC_uncompPed;
@@ -354,6 +356,7 @@ namespace label_gen{
       Z3l.clear();
       Z4l.clear();
       Z5l.clear();
+      getE.clear();
       
       getmother.clear();
       getpdg.clear();
@@ -462,8 +465,10 @@ namespace label_gen{
     auto scs = event.getValidHandle<std::vector<sim::SimChannel>>(fSimChannelProducerTag);
     auto mcParticles = event.getValidHandle<std::vector<simb::MCParticle>>(fTruthLabel);
     for(auto &trueParticle : *mcParticles) {
+        fEkGen = (std::sqrt(trueParticle.P()*trueParticle.P() + trueParticle.Mass()*trueParticle.Mass()) - trueParticle.Mass()) * 1000; // MeVs
         getmother.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.Mother()));
         getpdg.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.PdgCode()));
+        getE.insert(std::pair<int,double>(trueParticle.TrackId(),fEkGen);
     }
     for(auto &sc : *scs){
         auto simChannelNumber = sc.Channel();
@@ -491,25 +496,21 @@ namespace label_gen{
                         mothertemp=mother;
                         mother=getmother[mother];
                     }
-                    if(mothertemp==2112){
-                        for(auto &trueParticle2 : *mcParticles) {
-                            auto mcid2=trueParticle2.TrackId();
-                            if (mcid2 != mothertemp2) continue;
-                            fEkGen = (std::sqrt(trueParticle2.P()*trueParticle2.P() + trueParticle2.Mass()*trueParticle2.Mass()) - trueParticle2.Mass()) * 1000; // MeVs
-                            if(fEkGen<4){
-                                pdgnum=1;
-                            }
-                            else if(fEkGen>=4 && fEkGen<5){
-                                pdgnum=2;
-                            }
-                            else if(fEkGen>=5){
-                                pdgnum=3;
-                            }
-                            break;
+                    pdg=getpdg[mothertemp];
+                    if(pdg==2112){
+                        Ek=getE[mothertemp2];
+                        if(Ek<4){
+                            pdgnum=1;
+                        }
+                        else if(Ek>=4 && Ek<5){
+                            pdgnum=2;
+                        }
+                        else{
+                            pdgnum=3;
                         }
                     }
                     else{
-                        pdg=getpdg[mothertemp];
+                        //pdg=getpdg[mothertemp];
                         pdgnum=getPDGnum[pdg];
                     }
                     if(apal==0){
