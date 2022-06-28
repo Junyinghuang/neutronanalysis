@@ -363,6 +363,7 @@ void test::dataextract::analyze(art::Event const& e)
             //int ancestor=-1;
             int pdg=-1;
             int pdgnum=-1;
+            int sid=-1;
             
             for(auto &sc : *scs) {
                 auto simChannelNumber = sc.Channel();
@@ -377,7 +378,7 @@ void test::dataextract::analyze(art::Event const& e)
                         std::cout<<"j: "<<j<<std::endl;
                         //std::cout<<"numElectrons: "<<trackInfo[i].numElectrons<<std::endl;
                         //std::cout<<"energy: "<<trackInfo[i].energy<<std::endl;
-                        int sid=trackInfo[i].trackID;
+                        sid=trackInfo[i].trackID;
                         std::cout<<"track id: "<<hitid<<std::endl;
                 }
                 }
