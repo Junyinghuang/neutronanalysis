@@ -500,10 +500,10 @@ namespace label_gen{
                                 pdgnum=1;
                             }
                             else if(fEkGen>=4 && fEkGen<5){
-                                pdgnum=2
+                                pdgnum=2;
                             }
                             else if(fEkGen>=5){
-                                pdgnum=3
+                                pdgnum=3;
                             }
                             break;
                         }
