@@ -364,6 +364,7 @@ void test::dataextract::analyze(art::Event const& e)
             int pdg=-1;
             int pdgnum=-1;
             int sid=-1;
+            sid=sid-1;
             
             for(auto &sc : *scs) {
                 auto simChannelNumber = sc.Channel();
