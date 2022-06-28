@@ -460,8 +460,8 @@ namespace label_gen{
             if((int)trackInfo.size()!=0){std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<(int)trackInfo.size()<<std::endl;}
             for(int j=0;j<(int)trackInfo.size();j++){
                 std::cout<<"j: "<<j<<std::endl;
-                std::cout<<"numElectrons: "<<trackInfo[i].numElectrons<<std::endl;
-                std::cout<<"energy: "<<trackInfo[i].energy<<std::endl;
+                //std::cout<<"numElectrons: "<<trackInfo[i].numElectrons<<std::endl;
+                //std::cout<<"energy: "<<trackInfo[i].energy<<std::endl;
                 //sid=trackInfo[i].trackID;
                 std::cout<<"track id: "<<trackInfo[i].trackID<<std::endl;
             }
