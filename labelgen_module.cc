@@ -465,7 +465,7 @@ namespace label_gen{
                 std::cout<<"x: "<<trackInfo[i].x<<std::endl;
                 std::cout<<"y: "<<trackInfo[i].y<<std::endl;
                 std::cout<<"z: "<<trackInfo[i].z<<std::endl;
-                sid=trackInfo[i].trackID;;
+                sid=trackInfo[i].trackID;
                 std::cout<<"track id: "<<sid<<std::endl;
             }}
         }
