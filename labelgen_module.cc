@@ -131,6 +131,18 @@ namespace label_gen{
     std::vector<TH2S*> fTimeChanU;
     std::vector<TH2S*> fTimeChanV;
     std::vector<TH2S*> fTimeChanZ;
+      std::vector<double> U0;
+      std::vector<double> U1;
+      std::vector<double> U2;
+      std::vector<double> U3;
+      std::vector<double> U4;
+      std::vector<double> U5;
+      std::vector<double> V0;
+      std::vector<double> V1;
+      std::vector<double> V2;
+      std::vector<double> V3;
+      std::vector<double> V4;
+      std::vector<double> V5;
     std::vector<double> Z0;
     std::vector<double> Z1;
     std::vector<double> Z2;
@@ -196,13 +208,25 @@ namespace label_gen{
       fTree->Branch("Z1", &Z1);
       fTree->Branch("Z2", &Z2);
       fTree->Branch("Z3", &Z3);
-      fTree->Branch("Z4", &Z5);
+      fTree->Branch("Z4", &Z4);
       fTree->Branch("Z5", &Z5);
+      fTree->Branch("U0", &U0);
+      fTree->Branch("U1", &U1);
+      fTree->Branch("U2", &U2);
+      fTree->Branch("U3", &U3);
+      fTree->Branch("U4", &U4);
+      fTree->Branch("U5", &U5);
+      fTree->Branch("V0", &V0);
+      fTree->Branch("V1", &V1);
+      fTree->Branch("V2", &V2);
+      fTree->Branch("V3", &V3);
+      fTree->Branch("V4", &V4);
+      fTree->Branch("V5", &V5);
       fTree->Branch("Z0l", &Z0l);
       fTree->Branch("Z1l", &Z1l);
       fTree->Branch("Z2l", &Z2l);
       fTree->Branch("Z3l", &Z3l);
-      fTree->Branch("Z4l", &Z5l);
+      fTree->Branch("Z4l", &Z4l);
       fTree->Branch("Z5l", &Z5l);
       
       //getPDGnum.insert(std::pair<int,int>(2112,1));
@@ -415,6 +439,26 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanU[apa]->Fill(chan,l, uncompPed.at(l));
+                    cn=chan-apa*fChansPerAPA;
+                    vi=6000*cn+l;
+                    if(apa==0){
+                        U0[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==1){
+                        U1[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==2){
+                        U2[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==3){
+                        U3[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==4){
+                        U4[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==5){
+                        U5[vi]=uncompPed.at(l);
+                    }
                     //std::cout<<"U APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA: "<<chan-apa*fChansPerAPA<<std::endl;
 	  			}
 				}
@@ -425,6 +469,26 @@ namespace label_gen{
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
 	  			if(uncompPed.at(l)!=0){
 	    			fTimeChanV[apa]->Fill(chan,l, uncompPed.at(l));
+                    cn=chan-apa*fChansPerAPA-fNUCh;
+                    vi=6000*cn+l;
+                    if(apa==0){
+                        V0[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==1){
+                        V1[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==2){
+                        V2[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==3){
+                        V3[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==4){
+                        V4[vi]=uncompPed.at(l);
+                    }
+                    else if(apa==5){
+                        V5[vi]=uncompPed.at(l);
+                    }
                     //std::cout<<"V APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh: "<<chan-apa*fChansPerAPA-fNUCh<<std::endl;
 	  			}
 				}
@@ -471,12 +535,12 @@ namespace label_gen{
         getE.insert(std::pair<int,double>(trueParticle.TrackId(),fEkGen));
     }
     
-      for(int i=0;i<15360;i++){
+      /*for(int i=0;i<15360;i++){
           std::cout<<"i: "<<i<<std::endl;
           auto truth_channel = scs->at(i);
           int channum=truth_channel.Channel();
           std::cout<<"channum: "<<channum<<std::endl;
-      }
+      }*/
     
     for(auto &sc : *scs){
         auto simChannelNumber = sc.Channel();
