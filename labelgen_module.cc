@@ -470,6 +470,14 @@ namespace label_gen{
         getpdg.insert(std::pair<int,int>(trueParticle.TrackId(),trueParticle.PdgCode()));
         getE.insert(std::pair<int,double>(trueParticle.TrackId(),fEkGen));
     }
+    
+      for(int i=0;i<15360;i++){
+          std::cout<<"i: "<<i<<std::endl;
+          auto truth_channel = scs->at(chan);
+          int channum=truth_channel.Channel();
+          std::cout<<"channum: "<<channum<<std::endl;
+      }
+    
     for(auto &sc : *scs){
         auto simChannelNumber = sc.Channel();
         if ( fGeom->View(simChannelNumber) != geo::kZ) continue;
