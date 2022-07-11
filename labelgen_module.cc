@@ -473,7 +473,7 @@ namespace label_gen{
     
       for(int i=0;i<15360;i++){
           std::cout<<"i: "<<i<<std::endl;
-          auto truth_channel = scs->at(chan);
+          auto truth_channel = scs->at(i);
           int channum=truth_channel.Channel();
           std::cout<<"channum: "<<channum<<std::endl;
       }
