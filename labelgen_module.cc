@@ -627,11 +627,11 @@ namespace label_gen{
             if((int)trackInfo.size()!=0){
                 //std::cout<<"chan: "<<simChannelNumber<<" i: "<<i<<" infosize: "<<(int)trackInfo.size()<<std::endl;
                 scid=trackInfo[0].trackID;
-                if ( fGeom->View(simChannelNumber) = geo::kU){
+                if ( fGeom->View(simChannelNumber) == geo::kU){
                     cnl=simChannelNumber-apal*fChansPerAPA;}
-                if ( fGeom->View(simChannelNumber) = geo::kV){
+                if ( fGeom->View(simChannelNumber) == geo::kV){
                     cnl=simChannelNumber-apal*fChansPerAPA-fNUCh;}
-                if ( fGeom->View(simChannelNumber) = geo::kZ){
+                if ( fGeom->View(simChannelNumber) == geo::kZ){
                     cnl=simChannelNumber-apal*fChansPerAPA-fNUCh-fNVCh;}
                 
                 vil=6000*cnl+i;
@@ -665,7 +665,7 @@ namespace label_gen{
                         pdgnum=getPDGnum[pdg];
                     }
                     
-                    if(fGeom->View(simChannelNumber) = geo::kZ){
+                    if(fGeom->View(simChannelNumber) == geo::kZ){
                         if(apal==0){
                             Z0l[vil]=pdgnum;
                         }
@@ -685,8 +685,8 @@ namespace label_gen{
                             Z5l[vil]=pdgnum;
                         }
                     }
-                    else if(fGeom->View(simChannelNumber) = geo::kU){
-                        f(apal==0){
+                    else if(fGeom->View(simChannelNumber) == geo::kU){
+                        if(apal==0){
                             U0l[vil]=pdgnum;
                         }
                         else if(apal==1){
@@ -705,8 +705,8 @@ namespace label_gen{
                             U5l[vil]=pdgnum;
                         }
                     }
-                    else if(fGeom->View(simChannelNumber) = geo::kV){
-                        f(apal==0){
+                    else if(fGeom->View(simChannelNumber) == geo::kV){
+                        if(apal==0){
                             V0l[vil]=pdgnum;
                         }
                         else if(apal==1){
