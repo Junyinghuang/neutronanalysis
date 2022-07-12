@@ -535,7 +535,7 @@ namespace label_gen{
                     //std::cout<<"U APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA: "<<chan-apa*fChansPerAPA<<std::endl;
 	  			}
 				}
-      }// end of U View
+      } // end of U View
       
       //Induction Plane	  
       if( fGeom->View(chan) == geo::kV){	
@@ -565,7 +565,7 @@ namespace label_gen{
                     //std::cout<<"V APA: "<<apa<<" chan: "<<chan<<" l: "<<l<<" uncompPed.at(l): " <<uncompPed.at(l)<<" chan-apa*fChansPerAPA-fNUCh: "<<chan-apa*fChansPerAPA-fNUCh<<std::endl;
 	  			}
 				}
-      }// end of V View
+      } // end of V View
 
       if ( fGeom->View(chan) == geo::kZ){
 				for(unsigned int l=0;l<nADC_uncompPed;l++) {
@@ -723,6 +723,7 @@ namespace label_gen{
                         }
                         else if(apal==5){
                             V5l[vil]=pdgnum;
+                        }
                     }
                     break;
                 }
